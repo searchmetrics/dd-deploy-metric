@@ -1,0 +1,15 @@
+language: python
+dist: xenial
+sudo: false
+
+jobs:
+  include:
+    - stage: Build
+      script: echo building...
+    - stage: Deploy
+      script: echo deploying...
+    - stage: Send Deploy metrics
+      if: (NOT type IN (pull_request)) AND (branch = master)
+      script:
+      - git clone https://github.com/searchmetrics/dd-deploy-metric.git
+      - bash dd-deploy-metric/dd-deploy-metric.sh
