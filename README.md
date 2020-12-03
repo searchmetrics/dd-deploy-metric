@@ -48,4 +48,4 @@ after_script:
     - git clone --branch v0.1 https://github.com/searchmetrics/dd-deploy-metric.git && bash dd-deploy-metric/dd-deploy-metric.sh
 ```
 
-You will find complete examples in the (simple-cicd-configuration.yml) and (jobs-cicd-configuration.yml).
+You will find complete examples in the [simple-cicd-configuration.yml](simple-cicd-configuration.yml) and [jobs-cicd-configuration.yml](jobs-cicd-configuration.yml).
