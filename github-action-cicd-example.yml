@@ -8,7 +8,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Report deployment to Datadog
+      - name: Report deployment to the Datadog
         # Provides deployment metrics to the DD dashboard https://app.datadoghq.com/dashboard/ner-m2a-tfa/engineering-kpis
         env:
           ## Searchmetrics global secret variable DD_CLIENT_API_KEY is used here

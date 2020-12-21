@@ -76,3 +76,5 @@ To check the branch you can add additional condition eg:
 ```yaml
  if: ${{ success() }} && github.ref == 'refs/heads/master' 
 ```
+
+You will find complete examples in the [github-action-cicd-example.yml](github-action-cicd-example.yml)
