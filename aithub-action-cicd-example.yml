@@ -1,0 +1,20 @@
+name: example-deployment
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Report deployment to Datadog
+        # Provides deployment metrics to the DD dashboard https://app.datadoghq.com/dashboard/ner-m2a-tfa/engineering-kpis
+        env:
+          ## Searchmetrics global secret variable DD_CLIENT_API_KEY is used here
+          DD_CLIENT_API_KEY: ${{ secrets.DD_CLIENT_API_KEY }}
+          SERVICE: my-service-name
+          PROJECT: my-project-name
+          BU: My bussines unit
+        if: ${{ success() }}
+        run: git clone https://github.com/searchmetrics/dd-deploy-metric.git && bash dd-deploy-metric/dd-deploy-metric.sh

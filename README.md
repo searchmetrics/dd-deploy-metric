@@ -2,21 +2,20 @@
 Script to send deploy metric to Datadog
 ## How to use the script in your CI/CD pipeline
 To use the script in your repository you will need to configure environment variables and add the script lines to your CI configuration.
-### Configure environment variables
+
+### Travis CI/CD configuration 
+
+#### Configure environment variables
 First configure the variables DD_CLIENT_API_KEY, SERVICE, PROJECT AND BU. 
 > SERVICE, PROJECT AND BU, should be in lowercase. The BU value should be stansdarized and can be confirmed with the PI team. 
 
 To add the variables use the following methods:
 
-**Travis CI**
-
 You can follow the documentation to add variables using the repository settingsL
 https://docs.travis-ci.com/user/environment-variables/#defining-variables-in-repository-settings
 
-### Execute the script
+#### Execute the script
 To execute the script, you can use git clone followed by bash dd-deploy-metric/dd-deploy-metric.sh command.
-
-**Travis CI**
 
 In travis we can add the following a after_script to be executed. It will run after every deploy (or script if you don't have deploy section) stages and only if success:
 ```yaml
@@ -52,3 +51,28 @@ after_script:
 ```
 
 You will find complete examples in the [simple-cicd-configuration.yml](simple-cicd-configuration.yml) and [jobs-cicd-configuration.yml](jobs-cicd-configuration.yml).
+
+### GitHub Actions CI/CD configuration
+
+#### Check environment variables
+Ensure that the global secret environment variable *DD_CLIENT_API_KEY* is defined in the repository [howto](https://docs.github.com/en/free-pro-team@latest/actions/reference/encrypted-secrets) 
+Add additional step to the CI/CD workflow configuration (with the proper environment variables PROJECT, SERVICE, BU values )
+
+#### Add execution script to the workflow
+
+Add the last step tp your build
+```yaml
+      - name: Report deployment to the Datadog
+        env:
+          DD_CLIENT_API_KEY: ${{ secrets.DD_CLIENT_API_KEY }}
+          SERVICE: <SERVICE NAME>
+          PROJECT: <PROJECT NAME>
+          BU: <BUSINESS UNIT>
+        if: ${{ success() }}
+        run: git clone https://github.com/searchmetrics/dd-deploy-metric.git && bash dd-deploy-metric/dd-deploy-metric.sh
+```
+Ensure that the script is executed only after a deployment is done to the production.
+To check the branch you can add additional condition eg:
+```yaml
+ if: ${{ success() }} && github.ref == 'refs/heads/master' 
+```
