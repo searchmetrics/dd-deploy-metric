@@ -3,7 +3,10 @@ Script to send deploy metric to Datadog
 ## How to use the script in your CI/CD pipeline
 To use the script in your repository you will need to configure environment variables and add the script lines to your CI configuration.
 ### Configure environment variables
-First configure the variables DD_CLIENT_API_KEY, SERVICE, PROJECT AND BU. You can do this using the following methods:
+First configure the variables DD_CLIENT_API_KEY, SERVICE, PROJECT AND BU. 
+> SERVICE, PROJECT AND BU, should be in lowercase. The BU value should be stansdarized and can be confirmed with the PI team. 
+
+To add the variables use the following methods:
 
 **Travis CI**
 
