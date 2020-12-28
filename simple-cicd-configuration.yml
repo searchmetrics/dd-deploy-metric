@@ -10,6 +10,6 @@ deploy:
     provider: script
     script: echo deploying my app 
 
-after_script:
+after_deploy:
   - if [ "$TRAVIS_BRANCH" = "master" ] && [ "$TRAVIS_PULL_REQUEST" = "false" ]; then git clone https://github.com/searchmetrics/dd-deploy-metric.git ; bash dd-deploy-metric/dd-deploy-metric.sh; fi
 
