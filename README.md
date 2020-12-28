@@ -17,14 +17,14 @@ https://docs.travis-ci.com/user/environment-variables/#defining-variables-in-rep
 #### Execute the script
 To execute the script, you can use git clone followed by bash dd-deploy-metric/dd-deploy-metric.sh command.
 
-In travis we can add the following a after_script to be executed. It will run after every deploy (or script if you don't have deploy section) stages and only if success:
+In travis we can add the following a after_deploy to be executed. It will run after every deploy stages and only if success:
 ```yaml
-after_script:
+after_deploy:
     - git clone https://github.com/searchmetrics/dd-deploy-metric.git && bash dd-deploy-metric/dd-deploy-metric.sh
 ```
 In case you want to ensure this step only runs on specific branch, like main, you can use the following test:
 ```yaml
-after_script:
+after_deploy:
     - if [ "$TRAVIS_BRANCH" = "main" ] && [ "$TRAVIS_PULL_REQUEST" = "false" ]; then git clone https://github.com/searchmetrics/dd-deploy-metric.git ; bash dd-deploy-metric/dd-deploy-metric.sh; fi
 ```
 > By checking TRAVIS_PULL_REQUEST equals false avoids execution on PRs as Travis sets TRAVIS_BRANCH to the target branch on PRs.
@@ -46,7 +46,7 @@ jobs:
 
 Another option is to checkout an specific branch or tag:
 ```yaml
-after_script:
+after_deploy:
     - git clone --branch v0.1 https://github.com/searchmetrics/dd-deploy-metric.git && bash dd-deploy-metric/dd-deploy-metric.sh
 ```
 
