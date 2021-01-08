@@ -18,19 +18,19 @@ https://docs.travis-ci.com/user/environment-variables/#defining-variables-in-rep
 To execute the script, you can use git clone followed by bash dd-deploy-metric/dd-deploy-metric.sh command.
 
 In travis we can add the following a after_script to be executed. It will run after every deploy (or script if you don't have deploy section) stages and only if success:
-```yaml
+```YAML
 after_script:
     - git clone https://github.com/searchmetrics/dd-deploy-metric.git && bash dd-deploy-metric/dd-deploy-metric.sh
 ```
 In case you want to ensure this step only runs on specific branch, like main, you can use the following test:
-```yaml
+```YAML
 after_script:
     - if [ "$TRAVIS_BRANCH" = "main" ] && [ "$TRAVIS_PULL_REQUEST" = "false" ]; then git clone https://github.com/searchmetrics/dd-deploy-metric.git ; bash dd-deploy-metric/dd-deploy-metric.sh; fi
 ```
 > By checking TRAVIS_PULL_REQUEST equals false avoids execution on PRs as Travis sets TRAVIS_BRANCH to the target branch on PRs.
 
 If you use Jobs stages, you need to set it as the last stage, otherwise it will run for every stage of your pipeline:
-```yaml
+```YAML
 jobs:
   include:
     - stage: Build
@@ -45,7 +45,7 @@ jobs:
 ```
 
 Another option is to checkout an specific branch or tag:
-```yaml
+```YAML
 after_script:
     - git clone --branch v0.1 https://github.com/searchmetrics/dd-deploy-metric.git && bash dd-deploy-metric/dd-deploy-metric.sh
 ```
@@ -61,7 +61,7 @@ Add additional step to the CI/CD workflow configuration (with the proper environ
 #### Add execution script to the workflow
 
 Add the last step tp your build
-```yaml
+```YAML
       - name: Report deployment to the Datadog
         env:
           DD_CLIENT_API_KEY: ${{ secrets.DD_CLIENT_API_KEY }}
@@ -73,7 +73,7 @@ Add the last step tp your build
 ```
 Ensure that the script is executed only after a deployment is done to the production.
 To check the branch you can add additional condition eg:
-```yaml
+```YAML
  if: ${{ success() }} && github.ref == 'refs/heads/master' 
 ```
 
